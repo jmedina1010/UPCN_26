@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block title %}UPCN - Cargar CSV{% endblock %}
+
+{% block content %}
+<div class="card" style="max-width:760px;margin: 0 auto;">
+  <h2 class="page-title">Cargar padrón (CSV)</h2>
+  <div class="muted" style="margin-bottom:14px;">
+    Solo administradores. Subí un CSV con columnas como: <b>dni</b>, <b>apellido</b>, <b>nombre</b>, <b>localidad</b>, <b>provincia</b>.
+  </div>
+
+  {% if result %}
+    <div class="alert" style="border-color: rgba(11,43,90,.20); background: rgba(11,43,90,.06); color: var(--upcn-navy);">
+      Carga finalizada: {{ result }}
+    </div>
+  {% endif %}
+
+  <form method="post" action="/admin/upload" enctype="multipart/form-data">
+    <div class="field">
+      <label for="file">Archivo CSV</label>
+      <input id="file" type="file" name="file" accept=".csv" required />
+    </div>
+
+    <div class="actions">
+      <button class="btn" type="submit">Subir CSV</button>
+      <a class="btn secondary" href="/padron">Volver</a>
+    </div>
+  </form>
+
+  <div style="margin-top:16px;" class="muted">
+    Tip: si tu CSV viene con separador “;”, avisame y lo ajustamos para leerlo correctamente.
+  </div>
+</div>
+{% endblock %}

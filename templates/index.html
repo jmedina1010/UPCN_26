@@ -1,0 +1,16 @@
+html
+{% extends "base.html" %}
+{% block title %}Inicio{% endblock %}
+{% block content %}
+  <div class="p-4 p-md-5 bg-white border rounded-3">
+    <h1 class="h3 mb-2">Sistema de Consulta — Padrón Electoral</h1>
+    <p class="text-muted mb-4">Interfaz simple para consultar electores por DNI, nombre, apellido o distrito.</p>
+
+    {% if user %}
+      <p class="mb-3">Sesión: <strong>{{ user.email }}</strong> ({{ user.role }})</p>
+      <a class="btn btn-primary" href="/padron">Ir a búsqueda</a>
+    {% else %}
+      <a class="btn btn-primary" href="/login">Iniciar sesión</a>
+    {% endif %}
+  </div>
+{% endblock %}

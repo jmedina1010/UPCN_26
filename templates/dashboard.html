@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %}UPCN - Panel{% endblock %}
+
+{% block content %}
+<div class="card">
+  <h2 class="page-title">Panel</h2>
+  <div class="muted" style="margin-bottom:14px;">
+    Bienvenido{% if user %}, {{ user.email }}{% endif %}.
+  </div>
+
+  <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap:12px;">
+    <div class="card" style="box-shadow:none; border:1px solid var(--border);">
+      <h3 style="margin:0 0 6px 0; color: var(--upcn-navy);">Accesos</h3>
+      <div class="muted">Ir directo a las secciones principales.</div>
+      <div class="actions" style="margin-top:12px;">
+        <a class="btn" href="/padron">Buscar en padrón</a>
+        <a class="btn secondary" href="/admin/upload">Cargar CSV</a>
+      </div>
+    </div>
+
+    <div class="card" style="box-shadow:none; border:1px solid var(--border);">
+      <h3 style="margin:0 0 6px 0; color: var(--upcn-navy);">Estado</h3>
+      <div class="muted">
+        Sesión activa: <b>{% if request.session.get("uid") %}Sí{% else %}No{% endif %}</b>
+      </div>
+      <div class="actions" style="margin-top:12px;">
+        <a class="btn secondary" href="/logout">Cerrar sesión</a>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

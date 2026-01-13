@@ -1,0 +1,223 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>{% block title %}UPCN - Padrón{% endblock %}</title>
+
+  <style>
+    :root{
+      --upcn-navy:#0b2b5a;      /* azul oscuro */
+      --upcn-sky:#6ec1ff;       /* celeste */
+      --upcn-sky-2:#bfe8ff;     /* celeste suave */
+      --text:#0b1220;
+      --muted:#5b677a;
+      --bg:#f5f7fb;
+      --card:#ffffff;
+      --border:rgba(15, 23, 42, .12);
+      --shadow: 0 10px 25px rgba(2, 8, 23, .08);
+      --radius: 14px;
+      --btn:#0b2b5a;
+      --btn-hover:#08306b;
+      --danger:#b42318;
+    }
+
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Noto Sans", "Helvetica Neue", sans-serif;
+      color:var(--text);
+      background: var(--bg);
+    }
+
+    /* Header */
+    .topbar{
+      position:sticky; top:0; z-index:10;
+      background: linear-gradient(90deg, var(--upcn-navy), #0a3a7a);
+      color:#fff;
+      box-shadow: 0 8px 18px rgba(2, 8, 23, .18);
+    }
+    .flagstripe{
+      height: 10px;
+      background: linear-gradient(90deg,
+        var(--upcn-sky) 0%,
+        #ffffff 35%,
+        var(--upcn-sky) 70%,
+        #ffffff 100%
+      );
+      opacity:.95;
+    }
+    .topbar-inner{
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 14px 18px;
+      display:flex;
+      align-items:center;
+      gap:14px;
+      justify-content:space-between;
+    }
+    .brand{
+      display:flex; align-items:center; gap:12px;
+      min-width: 220px;
+    }
+    .brand img{
+      width:44px; height:44px; object-fit:contain;
+      background: rgba(255,255,255,.08);
+      border: 1px solid rgba(255,255,255,.18);
+      border-radius: 12px;
+      padding: 6px;
+    }
+    .brand .titles{
+      display:flex; flex-direction:column; line-height:1.1;
+    }
+    .brand .titles .org{
+      font-weight: 800; letter-spacing:.4px;
+    }
+    .brand .titles .app{
+      font-size: 13px; opacity:.9;
+    }
+
+    .nav{
+      display:flex; gap:10px; flex-wrap:wrap; justify-content:flex-end;
+    }
+    .nav a{
+      color:#fff; text-decoration:none;
+      padding: 8px 10px;
+      border-radius: 10px;
+      border: 1px solid rgba(255,255,255,.16);
+      background: rgba(255,255,255,.06);
+      font-size: 14px;
+    }
+    .nav a:hover{ background: rgba(255,255,255,.12); }
+
+    /* Layout */
+    .container{
+      max-width: 1100px;
+      margin: 22px auto;
+      padding: 0 18px 40px;
+    }
+
+    .card{
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 18px;
+    }
+
+    .page-title{
+      margin:0 0 12px 0;
+      font-size: 20px;
+    }
+    .muted{ color: var(--muted); }
+
+    /* Forms */
+    .field{
+      display:flex; flex-direction:column; gap:6px;
+      margin-bottom: 12px;
+    }
+    label{ font-size: 13px; color: var(--muted); }
+    input[type="text"], input[type="email"], input[type="password"], input[type="file"]{
+      width:100%;
+      padding: 11px 12px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      outline:none;
+      background:#fff;
+    }
+    input:focus{
+      border-color: rgba(110, 193, 255, .9);
+      box-shadow: 0 0 0 4px rgba(110, 193, 255, .22);
+    }
+
+    .actions{ display:flex; gap:10px; align-items:center; flex-wrap:wrap; }
+    .btn{
+      display:inline-flex; align-items:center; justify-content:center;
+      padding: 10px 14px;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,.0);
+      background: var(--btn);
+      color:#fff;
+      text-decoration:none;
+      cursor:pointer;
+      font-weight: 700;
+    }
+    .btn:hover{ background: var(--btn-hover); }
+    .btn.secondary{
+      background: #ffffff;
+      color: var(--upcn-navy);
+      border: 1px solid var(--border);
+    }
+    .btn.secondary:hover{ background:#f3f6ff; }
+
+    .alert{
+      padding: 10px 12px;
+      border-radius: 12px;
+      border: 1px solid rgba(180, 35, 24, .25);
+      background: rgba(180, 35, 24, .08);
+      color: var(--danger);
+      margin: 10px 0 14px;
+    }
+
+    /* Tables */
+    table{
+      width:100%;
+      border-collapse: separate;
+      border-spacing: 0;
+      overflow:hidden;
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      background:#fff;
+    }
+    th, td{
+      text-align:left;
+      padding: 10px 12px;
+      border-bottom: 1px solid rgba(15, 23, 42, .08);
+      font-size: 14px;
+    }
+    th{
+      background: linear-gradient(180deg, rgba(11,43,90,.08), rgba(11,43,90,.03));
+      color: var(--upcn-navy);
+      font-weight: 800;
+    }
+    tr:last-child td{ border-bottom: none; }
+
+    .footer{
+      margin-top: 22px;
+      font-size: 12px;
+      color: var(--muted);
+      text-align:center;
+    }
+  </style>
+</head>
+
+<body>
+  <header class="topbar">
+    <div class="flagstripe"></div>
+    <div class="topbar-inner">
+      <div class="brand">
+        <img src="/static/logo.png" alt="UPCN"/>
+        <div class="titles">
+          <div class="org">UPCN</div>
+          <div class="app">Consulta de Padrón</div>
+        </div>
+      </div>
+
+      <nav class="nav">
+        {% if request.session.get("uid") %}
+          <a href="/padron">Buscar</a>
+          <a href="/admin/upload">Cargar CSV</a>
+          <a href="/logout">Salir</a>
+        {% else %}
+          <a href="/login">Ingresar</a>
+        {% endif %}
+      </nav>
+    </div>
+  </header>
+
+  <div class="container">
+    {% block content %}{% endblock %}
+    <div class="footer">UPCN · Sistema de consulta</div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% block title %}UPCN - Padrón{% endblock %}
+
+{% block content %}
+<div class="card">
+  <h2 class="page-title">Búsqueda en padrón</h2>
+  <div class="muted" style="margin-bottom:14px;">
+    Buscá por DNI, nombre o apellido.
+  </div>
+
+  <form method="get" action="/padron" style="display:flex; gap:10px; flex-wrap:wrap; align-items:flex-end;">
+    <div class="field" style="flex:1; min-width:260px; margin:0;">
+      <label for="q">Buscar</label>
+      <input id="q" name="q" value="{{ q }}" placeholder="Ej: 30111222 o Pérez" />
+    </div>
+    <div class="actions">
+      <button class="btn" type="submit">Buscar</button>
+      <a class="btn secondary" href="/padron">Limpiar</a>
+    </div>
+  </form>
+
+  {% if results and results|length > 0 %}
+    <div style="margin-top:16px;">
+      <table>
+        <thead>
+          <tr>
+            <th>DNI</th>
+            <th>Apellido</th>
+            <th>Nombre</th>
+            <th>Localidad</th>
+            <th>Provincia</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for r in results %}
+            <tr>
+              <td>{{ r.dni }}</td>
+              <td>{{ r.apellido or "" }}</td>
+              <td>{{ r.nombre or "" }}</td>
+              <td>{{ r.localidad or "" }}</td>
+              <td>{{ r.provincia or "" }}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  {% elif q %}
+    <div class="alert" style="border-color: rgba(11,43,90,.20); background: rgba(11,43,90,.06); color: var(--upcn-navy);">
+      No se encontraron resultados para “{{ q }}”.
+    </div>
+  {% endif %}
+</div>
+{% endblock %}
