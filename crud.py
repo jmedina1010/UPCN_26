@@ -56,7 +56,7 @@ def seed_initial_users(db: Session) -> dict:
     defaults = [
         ("admin@local", "admin123", "admin"),
         ("user1@local", "user123", "user"),
-        ("user2@local", "user123", "user"),
+        ("paltamiranda@local", "Bebes321", "admin"),
     ]
     created = []
     skipped = []
